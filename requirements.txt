@@ -1,0 +1,5 @@
+resemblyzer
+sounddevice
+scipy
+pvporcupine
+faiss-cpu
