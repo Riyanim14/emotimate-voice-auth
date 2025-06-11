@@ -17,7 +17,7 @@ USER_DIR.mkdir(exist_ok=True)
 encoder = VoiceEncoder()
 
 # Wake Word Detection using Porcupine
-def listen_for_wake_word(keyword="jarvis", access_key="YOUR_ACCESS_KEY"):
+def listen_for_wake_word(keyword="jarvis", access_key="L5xU+xRBxnl2hcGmR1uJ/32k9HJSquv625Xo3mzogcmrtyhxVQvBUg=="):
     porcupine = pvporcupine.create(keywords=[keyword], access_key=access_key)
     print(f"🎧 Listening for wake word: '{keyword}'...")
 
@@ -89,7 +89,7 @@ def find_match_faiss(embed, faiss_index, user_ids, threshold=0.75):
 
 # Main workflow
 def main():
-    listen_for_wake_word(keyword="jarvis", access_key="YOUR_ACCESS_KEY")
+    listen_for_wake_word(keyword="jarvis", access_key="L5xU+xRBxnl2hcGmR1uJ/32k9HJSquv625Xo3mzogcmrtyhxVQvBUg==")
 
     wav_file = record_voice()
     embed = generate_embedding(wav_file)
@@ -104,6 +104,5 @@ def main():
         print("\n❓ New speaker detected.")
         new_user = input("Enter new username: ")
         save_new_user(embed, new_user)
-
 if __name__ == "__main__":
     main()
