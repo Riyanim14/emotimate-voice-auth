@@ -1,5 +1,7 @@
-resemblyzer
 sounddevice
 scipy
+resemblyzer
 pvporcupine
 faiss-cpu
+webrtcvad
+python-dotenv
