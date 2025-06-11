@@ -1,92 +1,79 @@
+# 🎙️ Emotimate Voice Authentication System
 
-# EmotiMate Voice-Based User Authentication
+This is a Python-based voice authentication system that:
 
-A Python-based voice authentication system designed for EmotiMate to detect who is speaking using speaker embeddings. It supports wake-word activation, voice-based user identification, and onboarding of new users — all offline.
-
----
-
-## 🔧 Features
-
-- 🎤 **Wake Word Detection** ("Jarvis") using [Picovoice Porcupine](https://picovoice.ai/products/porcupine/)
-- 🔊 **Voice Recording** using `sounddevice`
-- 🧠 **Speaker Embeddings** with `Resemblyzer`
-- ⚡ **Fast User Matching** via FAISS (cosine similarity)
-- 👤 **New User Onboarding** when no match is found
-- 📴 **Offline-first Operation** — suitable for embedded devices
+- Detects a wake word (e.g. "Jarvis") using **Porcupine**
+- Records speech only when speech is detected using **WebRTC VAD**
+- Creates and compares voice embeddings using **Resemblyzer**
+- Matches the speaker using **FAISS** vector similarity search
 
 ---
 
-## 📁 Folder Structure
+## 🔧 Requirements
 
-```
-emotimate_voice_auth/
-├── user_data/             # Stored speaker embeddings (.npy)
-├── voice_auth.py          # Main script
-├── requirements.txt       # Python dependencies
-├── README.md              # Project documentation
+### 🐍 Python Version
+```bash
+Python 3.8 - 3.10 (Recommended: 3.10)
 ```
 
----
+### 📦 Dependencies
 
-## 🚀 Quick Start
-
-### 1. Install Requirements
+All required dependencies are listed in the `requirements.txt` file. Install them with:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Set Up Porcupine
-- Create an account and get an **Access Key** at: https://console.picovoice.ai/
-- Replace `YOUR_ACCESS_KEY` in `voice_auth.py` with your actual key.
+### 📁 .env File
 
-### 3. Run the Script
+Create a `.env` file in the root directory with the following:
 
-```bash
-python voice_auth.py
+```env
+PORCUPINE_KEY=your_porcupine_access_key_here
 ```
 
-- Say the wake word (default: "Jarvis")
-- Speak a short phrase
-- The system will recognize your voice or prompt to create a new user profile
+You can get your [Porcupine Access Key](https://console.picovoice.ai/) by signing up at Picovoice.
 
 ---
 
-## 🧠 How It Works
+## 🚀 How It Works
 
-1. **Wake Word Activation**
-   - Uses Porcupine to start listening only when triggered
-
-2. **Speaker Embedding**
-   - Uses `Resemblyzer` to convert audio into a fixed-length embedding
-
-3. **Fast Matching**
-   - Uses `FAISS` to find the closest known voice vector
-
-4. **Onboarding**
-   - If no match, prompt for user name and save embedding
+1. Listens for the wake word "Jarvis"
+2. On detection, records the user's voice
+3. Converts the recording into a voice embedding
+4. Compares the embedding with stored users using FAISS
+5. Authenticates the speaker or prompts to register if unknown
 
 ---
 
-## 📦 Dependencies
+## 📂 Folder Structure
 
-- `resemblyzer`
-- `sounddevice`
-- `scipy`
-- `faiss-cpu`
-- `pvporcupine`
-
----
-
-## 🛠 Future Improvements
-
-- Add support for `pyannote.audio` for speaker diarization (multi-speaker handling)
-- Encrypt stored embeddings
-- Migrate from `.npy` to SQLite or vector DB for large-scale use
-- Add VAD (Voice Activity Detection) to trim silence
+```
+emotimate_voice_auth/
+│
+├── user_data/          # Stores voice embeddings per user
+├── voice_auth.py       # Main executable
+├── .env                # API keys (not committed)
+├── requirements.txt    # All dependencies
+└── README.md           # Project overview
+```
 
 ---
 
-## 📄 License
+## 👤 Adding New Users
 
-MIT License — free to use with attribution.
+If the voice is not recognized, the system prompts to add a new user and stores their embedding.
+
+---
+
+## ✅ Future Improvements
+
+- Add GUI
+- Improve multi-user handling
+- Support for re-training or deleting users
+
+---
+
+## 🛡️ Disclaimer
+
+This project is a prototype and **not secure** for production-level authentication.
